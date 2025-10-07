@@ -20,12 +20,37 @@ class GameState():
         ]
         self.whitemove = True
         self.moveLog = []
-
+    '''
+    Takes a Move as a parameter and executes it (this will not work for castling, pawn promotion, and en-passant)
+    '''
     def makeMove(self, move):
         self.board[move.startRow][move.startCol] = "--"
         self.board[move.endRow][move.endCol] = move.pieceMoved
         self.moveLog.append(move) # log the move so we are able to undo it later
         self.whiteToMove = not self.whitemove # swap player
+
+    '''
+    undoes the last move made
+    '''
+    def undoMove(self):
+        if len(self.moveLog) != 0: # make sure there is a move to undo
+            move = self.moveLog.pop()
+            self.board[move.startRow][move.startCol] = move.pieceMoved
+            self.board[move.endRow][move.endCol] = move.pieceCaptured
+            self.whiteToMove = not self.whiteToMove # switch turns back
+
+    '''
+    All moves including chacks
+    '''
+    def getValidMoves(self):
+        pass
+
+    '''
+    All moves excluding check
+    '''
+    def getAllPossibleMoves(self):
+        pass
+
 
 class Move():
     # maps keys to values
