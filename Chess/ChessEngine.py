@@ -110,7 +110,15 @@ class GameState():
                     break
 
     def getKnightMoves(self, r, c, moves):
-        pass
+        knightMoves = ((-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)) # 8 possible moves
+        allyColor = 'w' if self.whiteToMove else 'b'
+        for m in knightMoves:
+            endRow = r + m[0]
+            endCol = c + m[1]
+            if 0 <= endRow < 8 and 0 <= endCol < 8: # on board
+                endPiece = self.board[endRow][endCol]
+                if endPiece[0] != allyColor: # not an ally piece (empty or enemy piece)
+                    moves.append(Move((r, c), (endRow, endCol), self.board))
 
     def getBishopMoves(self, r, c, moves):
         directions = ((-1, -1), (-1, 1), (1, -1), (1, 1)) # 4 diagonals
